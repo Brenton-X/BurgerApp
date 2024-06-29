@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from './Counter.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import CartContext from "../../store/cart-context";
+
 /*
 * 引入FontAwesome
 *     -安装依赖
@@ -19,13 +21,16 @@ import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 // 计数器组件
 const Counter = (props) => {
 
+  // 获取cartContext
+  const ctx = useContext(CartContext)
+
   // 添加购物车的函数
   const addButtonHandler = () => {
-    props.onAdd(props.meal)
+    ctx.addItem(props.meal)
   }
 
   const subButtonHandler = () => {
-    props.onSub(props.meal)
+    ctx.removeItem(props.meal)
   }
 
   return (

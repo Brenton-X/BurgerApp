@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Meals from './components/Meals/Meals'
+import CartContext from './components/store/cart-context';
+import FilterMeals from './components/FilterMeals/FilterMeals';
 
 // 模拟一组食物数据
 const MEALS_DATA = [
@@ -69,7 +71,7 @@ const App = () => {
   })
 
   // 向购物车中添加商品
-  const addMealHandler = (meal) => {
+  const addItem = (meal) => {
     // meal 要添加进购物车的商品
     // 对购物车进行复制
     const newCart = { ...cartData }
@@ -98,7 +100,7 @@ const App = () => {
 
   // 减少商品数量
 
-  const subMealHandler = (meal) => {
+  const removeItem = (meal) => {
     const newCart = { ...cartData }
 
     meal.amount -= 1
@@ -113,13 +115,14 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Meals
-        mealsData={mealsData}
-        onAdd={addMealHandler}
-        onSub={subMealHandler}
-      />
-    </div>
+    <CartContext.Provider value={{ ...cartData, addItem, removeItem }}>
+      <div>
+        <FilterMeals />
+        <Meals
+          mealsData={mealsData}
+        />
+      </div>
+    </CartContext.Provider>
   )
 }
 
