@@ -122,8 +122,18 @@ const App = () => {
     setCartData(newCart)
   }
 
+  const clearCart = () => {
+    const newCart = { ...cartData }
+    // 将购物车中商品的数量清0
+    newCart.items.forEach(item => delete item.amount)
+    newCart.items = []
+    newCart.totalAmount = 0
+    newCart.totalPrice = 0
+    setCartData(newCart)
+  }
+
   return (
-    <CartContext.Provider value={{ ...cartData, addItem, removeItem }}>
+    <CartContext.Provider value={{ ...cartData, addItem, removeItem, clearCart }}>
       <div>
         <FilterMeals onFilter={filterHandler} />
         <Meals
